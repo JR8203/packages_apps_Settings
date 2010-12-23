@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2009 The Android Open Source Project
- *
+ * Copyright (c) 2010-2011, Code Aurora Forum. All rights reserved.
+
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -29,6 +30,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+
 import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.telephony.TelephonyProperties;
 import com.android.settings.bluetooth.BluetoothEnabler;
@@ -46,7 +48,7 @@ public class WirelessSettings extends PreferenceActivity {
     private static final String KEY_BT_SETTINGS = "bt_settings";
     private static final String KEY_VPN_SETTINGS = "vpn_settings";
     private static final String KEY_TETHER_SETTINGS = "tether_settings";
-
+    private static final String KEY_NETWORK_SETTINGS = "network_settings";
     public static final String EXIT_ECM_RESULT = "exit_ecm_result";
     public static final int REQUEST_CODE_EXIT_ECM = 1;
 
@@ -55,7 +57,7 @@ public class WirelessSettings extends PreferenceActivity {
     private WifiEnabler mWifiEnabler;
     private NfcEnabler mNfcEnabler;
     private BluetoothEnabler mBtEnabler;
-
+    private final int mResources[] = {R.xml.wireless_settings, R.xml.wireless_settings_multi_sim};
     /**
      * Invoked on each preference click in this hierarchy, overrides
      * PreferenceActivity's implementation.  Used to make sure we track the
@@ -90,6 +92,10 @@ public class WirelessSettings extends PreferenceActivity {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.wireless_settings);
+
+        int resIndex = getIntent().getIntExtra("RESOURCE_INDEX", 0);
+
+        findPreference(KEY_NETWORK_SETTINGS).getIntent().putExtra("RESOURCE_INDEX", resIndex);
 
         CheckBoxPreference airplane = (CheckBoxPreference) findPreference(KEY_TOGGLE_AIRPLANE);
         CheckBoxPreference wifi = (CheckBoxPreference) findPreference(KEY_TOGGLE_WIFI);

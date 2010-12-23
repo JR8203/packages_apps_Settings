@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2007 The Android Open Source Project
-
+     Copyright (C) 2010-2011, Code Aurora Forum. All rights reserved.
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
@@ -1224,6 +1224,56 @@
     <string name="sim_enter_ok">OK</string>
     <!-- SIM card lock settings screen, SIM PIN dialog button labels: -->
     <string name="sim_enter_cancel">Cancel</string>
+    <string name="icc_lock_settings_category">Set up SIM/RUIM card lock</string>
+    <!-- Security & location settings screen, section heading for settings related to ICC card locking -->
+    <string name="icc_lock_settings_title">SIM/RUIM card lock</string>
+    <!-- ICC card lock settings screen, setting check box label -->
+    <string name="icc_pin_toggle">Lock SIM/RUIM card</string>
+    <!-- ICC card lock settings screen, setting option summary text when ICC lock check box is selected -->
+    <string name="icc_lock_on">Require PIN to use phone</string>
+    <!-- ICC card lock settings screen, setting option summary text when ICC lock check box is clear -->
+    <string name="icc_lock_off">Do not require PIN to use phone</string>
+    <!-- ICC card lock settings screen, setting option name to change the ICC PIN -->
+    <string name="icc_pin_change">Change SIM/RUIM PIN</string>
+    <!-- ICC card lock settings screen, ICC PIN dialog message instruction -->
+    <string name="icc_enter_pin">SIM/RUIM PIN</string>
+    <!-- ICC card lock settings screen, ICC PIN dialog message instruction -->
+    <string name="icc_enable_icc_lock">Lock SIM/RUIM card</string>
+    <!-- ICC card lock settings screen, ICC PIN dialog message instruction -->
+    <string name="icc_disable_icc_lock">Unlock SIM/RUIM card</string>
+    <!-- ICC card lock settings screen, ICC PIN dialog message instruction -->
+    <string name="icc_enter_old">Old SIM/RUIM PIN</string>
+    <!-- ICC card lock settings screen, ICC PIN dialog message instruction -->
+    <string name="icc_enter_new">New SIM/RUIM PIN</string>
+    <string name="icc_reenter_new">Re-type new PIN</string>
+    <!-- ICC card lock settings screen, ICC PIN dialog message instruction -->
+    <string name="icc_change_pin">SIM/RUIM PIN</string>
+    <!-- ICC card lock settings screen, ICC PIN dialog message when wrong PIN is entered -->
+    <string name="icc_bad_pin">Incorrect PIN!</string>
+    <!-- ICC card lock settings screen, ICC PIN dialog message when PINs don't match -->
+    <string name="icc_pins_dont_match">PINs don\'t match!</string>
+    <!-- ICC card lock settings screen, toast after not entering correct ICC PIN -->
+    <string name="icc_change_failed">Unable to change PIN.\nPossibly incorrect PIN.</string>
+    <!-- ICC card lock settings screen, ICC PIN dialog message when the entered PIN is correct-->
+    <string name="icc_change_succeeded">SIM/RUIM PIN changed successfully</string>
+    <!-- ICC card lock settings screen, ICC PIN dialog message when Icc card is absent-->
+    <string name="icc_sim_absent">No SIM/RUIM</string>
+    <!-- ICC card lock settings screen, toast after not entering correct ICC PIN -->
+    <string name="icc_lock_failed">Unable to change SIM/RUIM card lock state.\nPossibly incorrect PIN.</string>
+    <!-- ICC card lock settings screen, ICC PIN dialog button labels: -->
+    <string name="icc_enter_ok">OK</string>
+    <!-- ICC card lock settings screen, ICC PIN dialog button labels: -->
+    <string name="icc_enter_cancel">Cancel</string>
+    <!-- ICC password can't be changed as ICC LOCK is not enabled: -->
+    <string name="icc_change_failed_enable_icc_lock">Unable to Change SIM/RUIM PIN.\n Enable SIM/RUIM LOCK.</string>
+    <!-- ICC lock can't be changed - not supported -->
+    <string name="icc_lock_change_not_supported">Unable to Change SIM/RUIM Lock.\n SIM/RUIM doesn\'t support it.</string>
+    <!-- ICC card lock settings screen, toast displayed on wrong PIN1: -->
+    <string name="icc_pin_attempts">\nAttempts Remaining :</string>
+    <!-- ICC card lock settings screen, toast displayed on PIN1 enable: -->
+    <string name="icc_pin_enabled">PIN1 Enabled!</string>
+    <!-- ICC card lock settings screen, toast displayed on PIN1 disable: -->
+    <string name="icc_pin_disabled">PIN1 Disabled!</string>
 
     <!-- Advanced (used for diagnostics) device info activity title -->
     <string name="device_info_settings">Phone status</string>
@@ -1320,6 +1370,10 @@
     <string name="sd_eject_summary" product="nosdcard">Unmount the internal USB storage</string>
     <!-- SD card & phone storage settings item title that will result in the phone unmounting the SD card.  This will be done before the user phyiscally removes the SD card from the phone.  Kind of like the "Safely remove" on some operating systems.   -->
     <string name="sd_eject_summary" product="default">Unmount the SD card so you can safely remove it</string>
+    <!-- Multi Sim Settings screen, Select Sub label -->
+    <string name="sel_sub_title">Configure Subscriptions </string>
+    <!-- Multi Sim Settings screen, Select Sub Summary label -->
+    <string name="sel_sub_summary">Select the Subscription for SUB-1 and SUB-2</string>
 
     <!-- SD card & phone storage settings item summary that is displayed when no SD card is inserted.  This version of the string can probably never come up on current hardware. [CHAR LIMIT=25] -->
     <string name="sd_insert_summary" product="nosdcard">Insert USB storage for mounting</string>
@@ -1447,6 +1501,9 @@
     <!-- APNs screen toast message to inform reset default APN settings is completed -->
     <string name="restore_default_apn_completed">Reset default APN settings completed</string>
 
+    <!-- Select Subscription screen title -->
+    <string name="select_subscription">Select Subscription</string>
+
     <!-- Master Clear -->
     <!-- SD card & phone storage settings screen, setting option name under Internal phone storage heading -->
     <string name="master_clear_title">Factory data reset</string>
@@ -1538,10 +1595,46 @@
     <!-- Thethering help button - calls up a web view with general tethering info -->
     <string name="tethering_help_button_text">Help</string>
 
+    <!-- Main settings screen, Multi Sim settings title for item to go into the Multi settings -->
+    <string name="multi_sim_settings_title">Multi Sim Settings</string>
+    <!-- Main settings screen, Multi Sim settings summary for item to go into Multi settings -->
+    <string name="multi_sim_settings_summary">Set up Multi Sim Settings for Voice, Data and SMS</string>
+
+    <!-- Multi Sim Settings screen, Voice box label -->
+    <string name="voice_title">Voice/USSD/MMI</string>
+    <!-- Multi Sim Settings screen, Voice Summary label -->
+    <string name="voice_summary">Select Subscription for Voice Call</string>
+
+    <!-- Multi Sim Settings screen, Data box label -->
+    <string name="data_title">Data Call</string>
+    <!-- Multi Sim Settings screen, Voice Summary label -->
+    <string name="data_summary">Select Subscription for Data Call</string>
+
+    <!-- Multi Sim Settings screen, SMS box label -->
+    <string name="sms_title">SMS </string>
+    <!-- Multi Sim Settings screen, Voice Summary label -->
+    <string name="sms_summary">Select the Subscription for Sending SMS</string>
+
+    <!-- Multi Sim Settings screen, Set DDS progress dialog message -->
+    <string name="set_data_subscription_progress">Set data subscription in progress</string>
+    <!-- Multi Sim Settings screen, Set DDS success message -->
+    <string name="set_dds_success">Set data subscription success</string>
+    <!-- Multi Sim Settings screen, Set DDS failure message -->
+    <string name="set_dds_failed">Error in set data subscription.  Clean up any existing data connection and try again.</string>
+
     <!-- Wireless controls, item title to go into the network settings -->
     <string name="network_settings_title">Mobile networks</string>
     <!-- Wireless controls, the item summary for the user to go into the network settings -->
     <string name="network_settings_summary">Set options for roaming, networks, APNs</string>
+
+    <!-- Mobile networks, item title to go into the network settings -->
+    <string name="subscription_01_title">SUB 1</string>
+    <!-- Mobile networks, the item summary for the user to go into the network settings -->
+    <string name="subscription_01_summary">Set options for SUB1 network settings</string>
+    <!-- Mobile networks, item title to go into the network settings -->
+    <string name="subscription_02_title">SUB 2</string>
+    <!-- Mobile networks, the item summary for the user to go into the network settings -->
+    <string name="subscription_02_summary">Set options for SUB2 network settings</string>
 
     <!-- Security & location settings screen, section header for settings relating to location -->
     <string name="location_title">My Location</string>

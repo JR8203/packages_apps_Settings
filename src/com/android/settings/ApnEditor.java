@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
- *
+ * Copyright (c) 2010-2011, Code Aurora Forum. All rights reserved.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -35,6 +35,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.telephony.TelephonyManager;
+import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
 
 import com.android.internal.telephony.TelephonyProperties;
 
@@ -72,6 +75,7 @@ public class ApnEditor extends PreferenceActivity
 
     private String mCurMnc;
     private String mCurMcc;
+    private int mSubscription = 0;
 
     private Uri mUri;
     private Cursor mCursor;
@@ -150,7 +154,9 @@ public class ApnEditor extends PreferenceActivity
 
         final Intent intent = getIntent();
         final String action = intent.getAction();
-
+        // Read the subscription received from Phone settings.
+        mSubscription = intent.getIntExtra(SelectSubscription.SUBSCRIPTION_ID, TelephonyManager.getDefaultSubscription());
+        Log.d(TAG,"ApnEditor onCreate received sub: " + mSubscription);
         mFirstTime = icicle == null;
 
         if (action.equals(Intent.ACTION_EDIT)) {
@@ -251,7 +257,8 @@ public class ApnEditor extends PreferenceActivity
             mApnType.setText(mCursor.getString(TYPE_INDEX));
             if (mNewApn) {
                 String numeric =
-                    SystemProperties.get(TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC);
+                TelephonyManager.getTelephonyProperty
+                        (TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC, mSubscription, null);
                 // MCC is first 3 chars and then in 2 - 3 chars of MNC
                 if (numeric != null && numeric.length() > 4) {
                     // Country code
@@ -385,6 +392,7 @@ public class ApnEditor extends PreferenceActivity
         String apn = checkNotSet(mApn.getText());
         String mcc = checkNotSet(mMcc.getText());
         String mnc = checkNotSet(mMnc.getText());
+        int dataSub = 0;
 
         String errorMsg = null;
         if (name.length() < 1) {
@@ -456,8 +464,15 @@ public class ApnEditor extends PreferenceActivity
 
         values.put(Telephony.Carriers.NUMERIC, mcc + mnc);
 
+        try {
+            dataSub = Settings.System.getInt(getContentResolver(),Settings.System.MULTI_SIM_DATA_CALL);
+        } catch (SettingNotFoundException snfe) {
+            Log.e(TAG, "Exception Reading Multi Sim Data Subscription Value.", snfe);
+        }
+
         if (mCurMnc != null && mCurMcc != null) {
-            if (mCurMnc.equals(mnc) && mCurMcc.equals(mcc)) {
+            if (mCurMnc.equals(mnc) && mCurMcc.equals(mcc) &&
+                mSubscription == dataSub ) {
                 values.put(Telephony.Carriers.CURRENT, 1);
             }
         }

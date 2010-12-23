@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (c) 2010-2011, Code Aurora Forum. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,16 +30,29 @@ public class Settings extends PreferenceActivity {
     private static final String KEY_CALL_SETTINGS = "call_settings";
     private static final String KEY_SYNC_SETTINGS = "sync_settings";
     private static final String KEY_DOCK_SETTINGS = "dock_settings";
-    
+    private static final String KEY_MULTI_SETTINGS = "multi_sim_settings";
+    private static final String KEY_WIRELESS_SETTINGS = "wireless_settings";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         addPreferencesFromResource(R.xml.settings);
-        
+
         int activePhoneType = TelephonyManager.getDefault().getPhoneType();
+        int settingsPrefScreenIndex;
 
         PreferenceGroup parent = (PreferenceGroup) findPreference(KEY_PARENT);
+        if (!TelephonyManager.isMultiSimEnabled()) {
+            parent.removePreference(findPreference(
+                    KEY_MULTI_SETTINGS));
+            settingsPrefScreenIndex = 0;
+        } else {
+            settingsPrefScreenIndex = 1;
+        }
+        findPreference(KEY_CALL_SETTINGS).getIntent().putExtra("RESOURCE_INDEX", settingsPrefScreenIndex);
+        findPreference(KEY_WIRELESS_SETTINGS).getIntent().putExtra("RESOURCE_INDEX", settingsPrefScreenIndex);
+
         Utils.updatePreferenceToSpecificActivityOrRemove(this, parent, KEY_SYNC_SETTINGS, 0);
 
         Preference dockSettings = parent.findPreference(KEY_DOCK_SETTINGS);
@@ -46,7 +60,7 @@ public class Settings extends PreferenceActivity {
             parent.removePreference(dockSettings);
         }
     }
-    
+
     @Override
     protected void onResume() {
         super.onResume();
