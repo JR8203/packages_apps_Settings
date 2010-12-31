@@ -1232,6 +1232,10 @@
     <string name="system_update_settings_list_item_summary">""</string>
 
     <!-- About phone screen, status item label -->
+    <string name="cpu_info">CPU info</string>
+    <!-- About phone screen, status item label -->
+    <string name="mem_info">Mem info (avail/total)</string>
+    <!-- About phone screen, status item label -->
     <string name="firmware_version">Android version</string>
     <!-- About phone screen, status item label-->
     <string name="model_number">Model number</string>
@@ -1941,7 +1945,7 @@ found in the list of installed applications.</string>
     <string name="runningservicedetails_stop_dlg_text">Are you sure you want to stop this system service? If you do, some
         features of your phone may stop working correctly until you power it off
         and then on again.</string>
-    
+
     <!-- Language Settings --> <skip />
     <!-- Title of setting on main settings screen.  This item will take the user to the screen to tweak settings realted to locale and text -->
     <string name="language_settings">Language &amp; keyboard</string>
@@ -2095,7 +2099,7 @@ found in the list of installed applications.</string>
 
     <!-- Used to show an amount of time in the form "s seconds" in BatteryHistory -->
     <string name="battery_history_seconds"><xliff:g id="seconds">%1$d</xliff:g>s</string>
-    
+
     <!-- XXX remove? Strings used for displaying usage statistics -->
     <string name="usage_stats_label">Usage statistics</string>
 
@@ -2696,7 +2700,6 @@ found in the list of installed applications.</string>
     <string name="wimax_settings">4G settings</string>
     <string name="wimax_settings_summary">Set up &amp; manage 4G network and modem</string>
     <string name="status_wimax_mac_address">4G MAC address</string>
-
     <string name="additional_system_update_settings_list_item_title">Additional system updates</string>
 
     <!-- Widget Picker -->
