@@ -387,6 +387,19 @@
         <item>中文 (繁體)</item>
     </string-array>
 
+    <!-- IPVersions used in APN editor -->
+    <string-array name = "ip_version_entries">
+        <item>IP</item>
+        <item>IPV6</item>
+        <item>IPV4V6</item>
+    </string-array>
+
+    <string-array translatable="false" name="ip_version_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
     <!-- Authentication Types used in APN editor -->
     <string-array name="apn_auth_entries">
         <item>None</item>
