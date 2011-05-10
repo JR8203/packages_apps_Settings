@@ -353,6 +353,88 @@
             </intent-filter>
         </activity>
 
+	<activity android:name="Changelog120"
+                android:label="@string/changelog_120"
+                android:theme="@*android:style/Theme.Dialog.Alert">
+            <intent-filter>
+                <action android:name="android.settings.120" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+       <activity android:name="ThanksPoitee"
+                android:label="@string/thanks_poitee"
+                android:theme="@*android:style/Theme.Dialog.Alert">
+            <intent-filter>
+                <action android:name="android.settings.THANKS_POITEE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+       <activity android:name="ThanksCm"
+                android:label="@string/thanks_cm"
+                android:theme="@*android:style/Theme.Dialog.Alert">
+            <intent-filter>
+                <action android:name="android.settings.THANKS_CM" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+       <activity android:name="ThanksShed"
+                android:label="@string/thanks_shed"
+                android:theme="@*android:style/Theme.Dialog.Alert">
+            <intent-filter>
+                <action android:name="android.settings.THANKS_SHED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+       <activity android:name="ThanksDonators"
+                android:label="@string/thanks_donators"
+                android:theme="@*android:style/Theme.Dialog.Alert">
+            <intent-filter>
+                <action android:name="android.settings.THANKS_DONATORS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+       <activity android:name="ThanksIrc"
+                android:label="@string/thanks_irc"
+                android:theme="@*android:style/Theme.Dialog.Alert">
+            <intent-filter>
+                <action android:name="android.settings.THANKS_IRC" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+       <activity android:name="ThanksW1n"
+                android:label="@string/thanks_w1n"
+                android:theme="@*android:style/Theme.Dialog.Alert">
+            <intent-filter>
+                <action android:name="android.settings.THANKS_W1N" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+       <activity android:name="ThanksSteve"
+                android:label="@string/thanks_steve"
+                android:theme="@*android:style/Theme.Dialog.Alert">
+            <intent-filter>
+                <action android:name="android.settings.THANKS_STEVE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+       <activity android:name="ThanksMr"
+                android:label="@string/thanks_mr"
+                android:theme="@*android:style/Theme.Dialog.Alert">
+            <intent-filter>
+                <action android:name="android.settings.THANKS_MR" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+       <activity android:name="RomInfoSettings"
+                android:label="@string/about_rom_settings">
+            <intent-filter>
+                <action android:name="android.settings.ROM_INFO_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name="SettingsSafetyLegalActivity"
                 android:label="@string/settings_safetylegal_activity_title"
                 android:theme="@*android:style/Theme.Dialog.Alert">

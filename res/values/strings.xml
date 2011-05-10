@@ -2787,4 +2787,19 @@ found in the list of installed applications.</string>
     <!-- Widget Picker -->
     <string name="widget_count">(%d widgets)</string>
 
+    <string name="about_rom_settings">About OMFGB</string>
+    <string name="rom_version">Rom type</string>
+    <string name="comp_by">Compiled by</string>
+    <string name="changelog_main">"Changelog"</string>
+    <string name="changelog_120">"1.2.0"</string>
+    <string name="thanks_main">"Contributors"</string>
+    <string name="thanks_poitee">"Poitee"</string>
+    <string name="thanks_cm">"The CyanogenMod team"</string>
+    <string name="thanks_steve">"Stevelogik"</string>
+    <string name="thanks_w1n">"Team W1n"</string>
+    <string name="thanks_donators">"All my donators"</string>
+    <string name="thanks_irc">"Everyone on #r2gb"</string>
+    <string name="thanks_shed">"WorkShed"</string>
+    <string name="thanks_mr">Mr.Virginia"</string>
+
 </resources>

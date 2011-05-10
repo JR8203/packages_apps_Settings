@@ -185,4 +185,14 @@
                 android:targetClass="com.android.settings.DeviceInfoSettings" />
         </com.android.settings.IconPreferenceScreen>
 
+	<!-- About Rom -->
+        <com.android.settings.IconPreferenceScreen
+            settings:icon="@drawable/ic_settings_rom"
+            android:title="@string/about_rom_settings">
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetPackage="com.android.settings"
+                android:targetClass="com.android.settings.RomInfoSettings" />
+        </com.android.settings.IconPreferenceScreen>
+
 </PreferenceScreen>
