@@ -20,6 +20,16 @@
     android:title="@string/settings_label"
     android:key="parent">
 
+	<com.android.settings.IconPreferenceScreen
+            settings:icon="@drawable/ic_settings_god_mode"
+            android:title="@string/god_mode_settings"
+            android:key="god_mode_settings">
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetPackage="com.t3hh4xx0r.god_mode"
+                android:targetClass="com.t3hh4xx0r.god_mode.GodMode" />
+        </com.android.settings.IconPreferenceScreen>
+
         <com.android.settings.IconPreferenceScreen
             android:title="@string/radio_controls_title"
             settings:icon="@drawable/ic_settings_wireless">

@@ -2784,6 +2784,8 @@ found in the list of installed applications.</string>
     <string name="status_wimax_mac_address">4G MAC address</string>
     <string name="additional_system_update_settings_list_item_title">Additional system updates</string>
 
+    <string name="god_mode_settings">God mode</string>
+
     <!-- Widget Picker -->
     <string name="widget_count">(%d widgets)</string>
 
