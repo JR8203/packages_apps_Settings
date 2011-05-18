@@ -55,7 +55,7 @@ public class RomInfoSettings extends PreferenceActivity {
         setStringSummary("rom_version", Build.ROMVER);
         setStringSummary("build_number", Build.DISPLAY);
         setStringSummary("comp_by", Build.USER);
-        findPreference("kernel_version").setSummary(getFormattedKernelVersion()$
+	findPreference("kernel_version").setSummary(getFormattedKernelVersion());
 
     }
 
