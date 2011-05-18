@@ -75,11 +75,8 @@ public class DeviceInfoSettings extends PreferenceActivity {
 
         setStringSummary("device_cpu", getCPUInfo());
         setStringSummary("device_memory", getMemAvail().toString()+" MB / "+getMemTotal().toString()+" MB");
-        setStringSummary("firmware_version", Build.VERSION.RELEASE);
-        findPreference("firmware_version").setEnabled(true);
         setValueSummary("baseband_version", "gsm.version.baseband");
         setStringSummary("device_model", Build.MODEL);
-        findPreference("kernel_version").setSummary(getFormattedKernelVersion());
 
         // Remove Safety information preference if PROPERTY_URL_SAFETYLEGAL is not set
         removePreferenceIfPropertyMissing(getPreferenceScreen(), "safetylegal",
@@ -116,24 +113,6 @@ public class DeviceInfoSettings extends PreferenceActivity {
         if(mUpdateSettingAvailable == false) {
             getPreferenceScreen().removePreference(findPreference(KEY_UPDATE_SETTING));
         }
-    }
-
-    @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference.getKey().equals("firmware_version")) {
-            System.arraycopy(mHits, 1, mHits, 0, mHits.length-1);
-            mHits[mHits.length-1] = SystemClock.uptimeMillis();
-            if (mHits[0] >= (SystemClock.uptimeMillis()-500)) {
-                Intent intent = new Intent(Intent.ACTION_MAIN);
-                intent.setClassName("android",
-                        com.android.internal.app.PlatLogoActivity.class.getName());
-                try {
-                    startActivity(intent);
-                } catch (Exception e) {
-                }
-            }
-        }
-        return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
     private void removePreferenceIfPropertyMissing(PreferenceGroup preferenceGroup,
@@ -278,49 +257,5 @@ public class DeviceInfoSettings extends PreferenceActivity {
       return info[1];
     }
 
-    private String getFormattedKernelVersion() {
-        String procVersionStr;
-
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("/proc/version"), 256);
-            try {
-                procVersionStr = reader.readLine();
-            } finally {
-                reader.close();
-            }
-
-            final String PROC_VERSION_REGEX =
-                "\\w+\\s+" + /* ignore: Linux */
-                "\\w+\\s+" + /* ignore: version */
-                "([^\\s]+)\\s+" + /* group 1: 2.6.22-omap1 */
-                "\\(([^\\s@]+(?:@[^\\s.]+)?)[^)]*\\)\\s+" + /* group 2: (xxxxxx@xxxxx.constant) */
-                "\\((?:[^(]*\\([^)]*\\))?[^)]*\\)\\s+" + /* ignore: (gcc ..) */
-                "([^\\s]+)\\s+" + /* group 3: #26 */
-                "(?:PREEMPT\\s+)?" + /* ignore: PREEMPT (optional) */
-                "(.+)"; /* group 4: date */
-
-            Pattern p = Pattern.compile(PROC_VERSION_REGEX);
-            Matcher m = p.matcher(procVersionStr);
-
-            if (!m.matches()) {
-                Log.e(TAG, "Regex did not match on /proc/version: " + procVersionStr);
-                return "Unavailable";
-            } else if (m.groupCount() < 4) {
-                Log.e(TAG, "Regex match on /proc/version only returned " + m.groupCount()
-                        + " groups");
-                return "Unavailable";
-            } else {
-                return (new StringBuilder(m.group(1)).append("\n").append(
-                        m.group(2)).append(" ").append(m.group(3)).append("\n")
-                        .append(m.group(4))).toString();
-            }
-        } catch (IOException e) {
-            Log.e(TAG,
-                "IO Exception when getting kernel version for Device Info screen",
-                e);
-
-            return "Unavailable";
-        }
-    }
 
 }
