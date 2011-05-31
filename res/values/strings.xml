@@ -2794,6 +2794,7 @@ found in the list of installed applications.</string>
     <string name="comp_by">Compiled by</string>
     <string name="changelog_main">"Changelog"</string>
     <string name="changelog_120">"1.2.0"</string>
+    <string name="changelog_130">"1.3.0"</string>
     <string name="thanks_main">"Contributors"</string>
     <string name="thanks_poitee">"Poitee"</string>
     <string name="thanks_cm">"The CyanogenMod team"</string>

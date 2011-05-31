@@ -362,6 +362,16 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="Changelog130"
+                android:label="@string/changelog_130"
+                android:theme="@*android:style/Theme.Dialog.Alert">
+            <intent-filter>
+                <action android:name="android.settings.130" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
 	<activity android:name="Changelog120"
                 android:label="@string/changelog_120"
                 android:theme="@*android:style/Theme.Dialog.Alert">

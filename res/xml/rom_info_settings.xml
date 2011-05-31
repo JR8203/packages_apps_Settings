@@ -53,6 +53,12 @@
                 android:title="@string/changelog_main">
 
         <PreferenceScreen
+                    android:key="changelog_130"
+                    android:title="@string/changelog_130">
+                <intent android:action="android.settings.130" />
+            </PreferenceScreen>
+
+        <PreferenceScreen
                     android:key="changelog_120"
                     android:title="@string/changelog_120">
                 <intent android:action="android.settings.120" />
