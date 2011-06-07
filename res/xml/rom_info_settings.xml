@@ -41,6 +41,13 @@
                 android:title="@string/build_number"
                 android:summary="@string/device_info_default"/>
 
+	<!-- Build date taken from shell -->
+	<!-- To do! : This should probably be taken from os.Build since there is already a string there but this is easier -->
+	<Preference android:key="build_date"
+		style="?android:preferenceInformationStyle"
+		android:title="@string/build_date"
+		android:summary="@string/device_info_default"/>
+
 	<!-- Compiled By -->
         <Preference android:key="comp_by" 
                 style="?android:preferenceInformationStyle"

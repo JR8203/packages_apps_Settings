@@ -1247,6 +1247,8 @@
     <string name="kernel_version">Kernel version</string>
     <!-- About phone screen,  setting option name-->
     <string name="build_number">Build number</string>
+    <!-- About phone screen, setting option name -->
+    <string name="build_date">Build date</string>
     <!-- About phone screen,  setting option name-->
     <string name="mod_version">Mod version</string>
     <string name="mod_version_default">Unknown</string>
