@@ -372,6 +372,33 @@
             </intent-filter>
         </activity>
 
+       <activity android:name="ThanksJb413"
+                android:label="@string/thanks_jb413"
+                android:theme="@*android:style/Theme.Dialog.Alert">
+            <intent-filter>
+                <action android:name="android.settings.THANKS_JB413" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+       <activity android:name="ThanksEvervolv"
+                android:label="@string/thanks_evervolv"
+                android:theme="@*android:style/Theme.Dialog.Alert">
+            <intent-filter>
+                <action android:name="android.settings.THANKS_EVERVOLV" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+       <activity android:name="ThanksPeter"
+                android:label="@string/thanks_peter"
+                android:theme="@*android:style/Theme.Dialog.Alert">
+            <intent-filter>
+                <action android:name="android.settings.THANKS_PETER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
        <activity android:name="ThanksPoitee"
                 android:label="@string/thanks_poitee"
                 android:theme="@*android:style/Theme.Dialog.Alert">

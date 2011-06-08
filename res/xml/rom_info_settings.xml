@@ -125,5 +125,23 @@
                 <intent android:action="android.settings.THANKS_MR" />
         </PreferenceScreen>
 
+        <PreferenceScreen
+                    android:key="thanks_peter"
+                    android:title="@string/thanks_peter">
+                <intent android:action="android.settings.THANKS_PETER" />
+        </PreferenceScreen>
+
+        <PreferenceScreen
+                    android:key="thanks_jb413"
+                    android:title="@string/thanks_jb413">
+                <intent android:action="android.settings.THANKS_JB413" />
+        </PreferenceScreen>
+
+        <PreferenceScreen
+                    android:key="thanks_evervolv"
+                    android:title="@string/thanks_evervolv">
+                <intent android:action="android.settings.THANKS_EVERVOLV" />
+        </PreferenceScreen>
+
     </PreferenceScreen>
 </PreferenceScreen>
