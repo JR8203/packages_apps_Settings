@@ -9,7 +9,7 @@ public class ThanksPeter extends Activity {
    public void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
        TextView tv = new TextView(this);
-       tv.setText("-Allowed us to use both his device and vendore setup for gingerbread OG Droid.");
+       tv.setText("-Allowed us to use both his device and vendor setup for gingerbread OG Droid.");
        setContentView(tv);
    }
 }
