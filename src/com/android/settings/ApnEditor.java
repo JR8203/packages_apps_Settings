@@ -37,7 +37,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.android.internal.telephony.TelephonyProperties;
-import com.android.internal.telephony.RILConstants;
 
 
 public class ApnEditor extends PreferenceActivity
@@ -48,7 +47,7 @@ public class ApnEditor extends PreferenceActivity
 
     private final static String SAVED_POS = "pos";
     private final static String KEY_AUTH_TYPE = "auth_type";
-    private final static String KEY_PROTOCOL = "apn_protocol";
+    private final static String KEY_IP = "ip_version";
 
     private static final int MENU_DELETE = Menu.FIRST;
     private static final int MENU_SAVE = Menu.FIRST + 1;
@@ -69,7 +68,7 @@ public class ApnEditor extends PreferenceActivity
     private EditTextPreference mMmsPort;
     private ListPreference mAuthType;
     private EditTextPreference mApnType;
-    private ListPreference mProtocol;
+    private ListPreference mIp;
 
     private String mCurMnc;
     private String mCurMcc;
@@ -100,7 +99,7 @@ public class ApnEditor extends PreferenceActivity
             Telephony.Carriers.MMSPORT, // 13
             Telephony.Carriers.AUTH_TYPE, // 14
             Telephony.Carriers.TYPE, // 15
-            Telephony.Carriers.PROTOCOL, // 16
+            Telephony.Carriers.IPVERSION //16
     };
 
     private static final int ID_INDEX = 0;
@@ -118,7 +117,7 @@ public class ApnEditor extends PreferenceActivity
     private static final int MMSPORT_INDEX = 13;
     private static final int AUTH_TYPE_INDEX = 14;
     private static final int TYPE_INDEX = 15;
-    private static final int PROTOCOL_INDEX = 16;
+    private static final int IP_INDEX = 16;
 
 
     @Override
@@ -142,11 +141,10 @@ public class ApnEditor extends PreferenceActivity
         mMnc = (EditTextPreference) findPreference("apn_mnc");
         mApnType = (EditTextPreference) findPreference("apn_type");
 
-        mAuthType = (ListPreference) findPreference(KEY_AUTH_TYPE);
+        mIp = (ListPreference) findPreference("ip_version");
+        mIp.setOnPreferenceChangeListener(this);
+        mAuthType = (ListPreference) findPreference("auth_type");
         mAuthType.setOnPreferenceChangeListener(this);
-
-        mProtocol = (ListPreference) findPreference(KEY_PROTOCOL);
-        mProtocol.setOnPreferenceChangeListener(this);
 
         mRes = getResources();
 
@@ -204,6 +202,36 @@ public class ApnEditor extends PreferenceActivity
         super.onPause();
     }
 
+    private int getIpVersionIndex(String ver) {
+        // IP version 4 is default
+        int IPV4_INDEX = 0;
+        int IPV6_INDEX = 1;
+        int IPV4_AND_IPV6_INDEX = 2;
+        String IPV6 = "6";
+        String IPV4 = "4";
+        boolean ipv4Enabled = false;
+        boolean ipv6Enabled = false;
+        if (ver != null) {
+            String verList[] = ver.split(",");
+            for (String version : verList) {
+                version = version.trim();
+                if (version.equals(IPV6)) {
+                    ipv6Enabled = true;
+                }
+                if (version.equals(IPV4)) {
+                    ipv4Enabled = true;
+                }
+            }
+            if (ipv4Enabled && ipv6Enabled) {
+                return IPV4_AND_IPV6_INDEX;
+            }
+            if (ipv6Enabled) {
+                return IPV6_INDEX;
+            }
+        }
+        return IPV4_INDEX;
+    }
+
     private void fillUi() {
         if (mFirstTime) {
             mFirstTime = false;
@@ -242,7 +270,9 @@ public class ApnEditor extends PreferenceActivity
                 mAuthType.setValueIndex(authVal);
             }
 
-            mProtocol.setValue(mCursor.getString(PROTOCOL_INDEX));
+            int verIndex = getIpVersionIndex(mCursor.getString(IP_INDEX));
+            mIp.setValueIndex(verIndex);
+
         }
 
         mName.setSummary(checkNull(mName.getText()));
@@ -261,61 +291,29 @@ public class ApnEditor extends PreferenceActivity
 
         String authVal = mAuthType.getValue();
         if (authVal != null) {
-            int authValIndex = Integer.parseInt(authVal);
-            mAuthType.setValueIndex(authValIndex);
-
-            String []values = mRes.getStringArray(R.array.apn_auth_entries);
-            mAuthType.setSummary(values[authValIndex]);
+            setListPreferenceSummary(mAuthType, R.array.apn_auth_entries, authVal);
         } else {
             mAuthType.setSummary(sNotSet);
         }
-
-        mProtocol.setSummary(
-                checkNull(protocolDescription(mProtocol.getValue())));
     }
 
-    /**
-     * Returns the UI choice (e.g., "IPv4/IPv6") corresponding to the given
-     * raw value of the protocol preference (e.g., "IPV4V6"). If unknown,
-     * return null.
-     */
-    private String protocolDescription(String raw) {
-        int protocolIndex = mProtocol.findIndexOfValue(raw);
-        if (protocolIndex == -1) {
-            return null;
-        } else {
-            String[] values = mRes.getStringArray(R.array.apn_protocol_entries);
-            try {
-                return values[protocolIndex];
-            } catch (ArrayIndexOutOfBoundsException e) {
-                return null;
-            }
-        }
+    private void setListPreferenceSummary(ListPreference pref, int array, Object newValue) {
+        int index = Integer.parseInt((String) newValue);
+        pref.setValueIndex(index);
+        String[] values = mRes.getStringArray(array);
+        pref.setSummary(values[index]);
     }
 
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         String key = preference.getKey();
         if (KEY_AUTH_TYPE.equals(key)) {
             try {
-                int index = Integer.parseInt((String) newValue);
-                mAuthType.setValueIndex(index);
-
-                String []values = mRes.getStringArray(R.array.apn_auth_entries);
-                mAuthType.setSummary(values[index]);
+                setListPreferenceSummary(mAuthType, R.array.apn_auth_entries, newValue);
             } catch (NumberFormatException e) {
                 return false;
             }
-            return true;
         }
 
-        if (KEY_PROTOCOL.equals(key)) {
-            String protocol = protocolDescription((String) newValue);
-            if (protocol == null) {
-                return false;
-            }
-            mProtocol.setSummary(protocol);
-            mProtocol.setValue((String) newValue);
-        }
         return true;
     }
 
@@ -418,7 +416,7 @@ public class ApnEditor extends PreferenceActivity
 
         ContentValues values = new ContentValues();
 
-        // Add a dummy name "Untitled", if the user exits the screen without adding a name but 
+        // Add a dummy name "Untitled", if the user exits the screen without adding a name but
         // entered other information worth keeping.
         values.put(Telephony.Carriers.NAME,
                 name.length() < 1 ? getResources().getString(R.string.untitled_apn) : name);
@@ -437,12 +435,19 @@ public class ApnEditor extends PreferenceActivity
             values.put(Telephony.Carriers.AUTH_TYPE, Integer.parseInt(authVal));
         }
 
-        values.put(Telephony.Carriers.PROTOCOL, checkNotSet(mProtocol.getValue()));
-
-        // Hardcode IPv4 roaming for now until the carriers sort out all the
-        // billing arrangements.
-        values.put(Telephony.Carriers.ROAMING_PROTOCOL,
-                RILConstants.SETUP_DATA_PROTOCOL_IP);
+        String[] ipVersionProjection = {
+            "4",
+            "6",
+            "4,6"
+        };
+        String version = mIp.getValue();
+        if (version != null) {
+            int index = Integer.parseInt(version);
+            if (index >= ipVersionProjection.length || index < 0) {
+                index = 0;
+            }
+            values.put(Telephony.Carriers.IPVERSION, ipVersionProjection[index]);
+        }
 
         values.put(Telephony.Carriers.TYPE, checkNotSet(mApnType.getText()));
 
