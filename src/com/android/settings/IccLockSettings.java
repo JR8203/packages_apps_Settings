@@ -33,7 +33,6 @@ import android.widget.Toast;
 import android.telephony.TelephonyManager;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneFactory;
-import com.android.internal.telephony.CommandException;
 
 /**
  * Implements the preference screen to enable/disable ICC lock and
@@ -95,10 +94,10 @@ public class IccLockSettings extends PreferenceActivity
             AsyncResult ar = (AsyncResult) msg.obj;
             switch (msg.what) {
                 case ENABLE_ICC_PIN_COMPLETE:
-                    iccLockChanged(ar);
+                    iccLockChanged(ar.exception == null);
                     break;
                 case CHANGE_ICC_PIN_COMPLETE:
-                    iccPinChanged(ar);
+                    iccPinChanged(ar.exception == null);
                     break;
             }
 
@@ -368,16 +367,5 @@ public class IccLockSettings extends PreferenceActivity
         mPin = "";
         setDialogValues();
         mDialogState = OFF_MODE;
-    }
-
-    private void displayRetryCounter(String s) {
-        int attempts = mPhone.getIccCard().getIccPin1RetryCount();
-        if (attempts >= 0) {
-            String displayMsg = s + mRes.getString(R.string.icc_pin_attempts) + attempts;
-            Toast.makeText(this, displayMsg, Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, mRes.getString(R.string.icc_lock_failed), Toast.LENGTH_SHORT)
-            .show();
-        }
     }
 }
