@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2008 The Android Open Source Project
-     Copyright (C) 2010-2011, Code Aurora Forum. All rights reserved.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -22,7 +21,6 @@
     android:key="parent">
 
         <com.android.settings.IconPreferenceScreen
-            android:key="wireless_settings"
             android:title="@string/radio_controls_title"
             settings:icon="@drawable/ic_settings_wireless">
             <intent
@@ -38,7 +36,7 @@
             <intent
                 android:action="android.intent.action.MAIN"
                 android:targetPackage="com.android.phone"
-                android:targetClass="com.android.phone.CallIndependentServices" />
+                android:targetClass="com.android.phone.CallFeaturesSetting" />
         </com.android.settings.IconPreferenceScreen>
 
         <!-- Sound -->
@@ -61,17 +59,6 @@
                 android:action="android.intent.action.MAIN"
                 android:targetPackage="com.android.settings"
                 android:targetClass="com.android.settings.DisplaySettings" />
-        </com.android.settings.IconPreferenceScreen>
-
-        <!-- Multi sim Settings -->
-        <com.android.settings.IconPreferenceScreen
-            android:key="multi_sim_settings"
-            settings:icon="@drawable/ic_settings_sim"
-            android:title="@string/multi_sim_settings_title">
-            <intent
-                android:action="android.intent.action.MAIN"
-                android:targetPackage="com.android.settings"
-                android:targetClass="com.android.settings.MultiSimSettings" />
         </com.android.settings.IconPreferenceScreen>
 
         <!-- Security & Location -->

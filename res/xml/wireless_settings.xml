@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2008 The Android Open Source Project
-     Copyright (c) 2010-2011, Code Aurora Forum. All rights reserved.
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -94,14 +93,13 @@
         android:persistent="false" />
 
     <PreferenceScreen
-        android:key="network_settings"
         android:title="@string/network_settings_title"
         android:summary="@string/network_settings_summary"
         android:dependency="toggle_airplane">
         <intent
             android:action="android.intent.action.MAIN"
             android:targetPackage="com.android.phone"
-            android:targetClass="com.android.phone.MobileNetworkSettings" />
+            android:targetClass="com.android.phone.Settings" />
     </PreferenceScreen>
 
 </PreferenceScreen>

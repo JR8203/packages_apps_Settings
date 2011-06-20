@@ -1,7 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
- * Copyright (c) 2010-2011, Code Aurora Forum. All rights reserved.
-
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -23,14 +22,12 @@ import android.os.AsyncResult;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.content.Intent;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.widget.Toast;
 
-import android.telephony.TelephonyManager;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.PhoneFactory;
 
@@ -143,10 +140,7 @@ public class IccLockSettings extends PreferenceActivity
         // Don't need any changes to be remembered
         getPreferenceScreen().setPersistent(false);
         
-        Intent intent = getIntent();
-        int subscription = intent.getIntExtra(SelectSubscription.SUBSCRIPTION_ID, PhoneFactory.getDefaultSubscription());
-        // Use the right phone based on the subscription selected.
-        mPhone = PhoneFactory.getPhone(subscription);
+        mPhone = PhoneFactory.getDefaultPhone();
         mRes = getResources();
     }
     
@@ -280,64 +274,28 @@ public class IccLockSettings extends PreferenceActivity
     }
 
     private void tryChangeIccLockState() {
-        // Try to change icc lock. If it succeeds, toggle the lock state and
+        // Try to change icc lock. If it succeeds, toggle the lock state and 
         // reset dialog state. Else inject error message and show dialog again.
         Message callback = Message.obtain(mHandler, ENABLE_ICC_PIN_COMPLETE);
         mPhone.getIccCard().setIccLockEnabled(mToState, mPin, callback);
 
     }
-
-    private void iccLockChanged(AsyncResult ar) {
-        if (ar.exception == null) {
-            if (mToState) {
-                Toast.makeText(this, mRes.getString(R.string.icc_pin_enabled), Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, mRes.getString(R.string.icc_pin_disabled), Toast.LENGTH_SHORT).show();
-            }
+    
+    private void iccLockChanged(boolean success) {
+        if (success) {
             mPinToggle.setChecked(mToState);
         } else {
-            if (ar.exception instanceof CommandException) {
-                if (((CommandException) (ar.exception)).getCommandError()
-                            == CommandException.Error.REQUEST_NOT_SUPPORTED) {
-                    Toast.makeText(this, mRes.getString(R.string.icc_lock_change_not_supported),
-                            Toast.LENGTH_SHORT)
-                            .show();
-                } else {
-                    displayRetryCounter(mRes.getString(R.string.icc_change_failed));
-                }
-             } else {
-                 //check for the icc card presence for the default phone
-                 if (!(mPhone.getIccCard().hasIccCard())) {
-                     Toast.makeText(this, mRes.getString(R.string.icc_sim_absent),
-                             Toast.LENGTH_SHORT)
-                             .show();
-                 }
-             }
+            Toast.makeText(this, mRes.getString(R.string.sim_lock_failed), Toast.LENGTH_SHORT)
+                    .show();
         }
         resetDialogState();
     }
 
-    private void iccPinChanged(AsyncResult ar) {
-        if (ar.exception != null) {
-            if (ar.exception instanceof CommandException) {
-                if(((CommandException) (ar.exception)).getCommandError()
-                            == CommandException.Error.REQUEST_NOT_SUPPORTED) {
-                    // If the exception is REQUEST_NOT_SUPPORTED then change pin couldn't
-                    // happen because SIM lock is not enabled.
-                    Toast.makeText(this, mRes.getString(R.string.icc_change_failed_enable_icc_lock),
-                            Toast.LENGTH_SHORT)
-                            .show();
-                } else {
-                    displayRetryCounter(mRes.getString(R.string.icc_change_failed));
-                }
-            } else {
-                //check for the icc card presence for the default phone
-                if (!(mPhone.getIccCard().hasIccCard())) {
-                    Toast.makeText(this, mRes.getString(R.string.icc_sim_absent),
-                            Toast.LENGTH_SHORT)
-                            .show();
-                }
-            }
+    private void iccPinChanged(boolean success) {
+        if (!success) {
+            Toast.makeText(this, mRes.getString(R.string.sim_change_failed),
+                    Toast.LENGTH_SHORT)
+                    .show();
         } else {
             Toast.makeText(this, mRes.getString(R.string.sim_change_succeeded),
                     Toast.LENGTH_SHORT)
