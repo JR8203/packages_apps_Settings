@@ -51,7 +51,11 @@ public class ApnEditor extends PreferenceActivity
 
     private final static String SAVED_POS = "pos";
     private final static String KEY_AUTH_TYPE = "auth_type";
+<<<<<<< HEAD
+    private final static String KEY_IP = "ip_version";
+=======
     private final static String KEY_PROTOCOL = "apn_protocol";
+>>>>>>> a52c569... Support configuring the protocol in APN settings.
 
     private static final int MENU_DELETE = Menu.FIRST;
     private static final int MENU_SAVE = Menu.FIRST + 1;
@@ -210,16 +214,34 @@ public class ApnEditor extends PreferenceActivity
         super.onPause();
     }
 
-    private static final String[] ipVersionString = {
-            "IP", "IPV6", "IPV4V6"
-    };
-
     private int getIpVersionIndex(String ver) {
-        for (int i = 0; i < ipVersionString.length; i++) {
-            if (ipVersionString[i].equals(ver))
-                return i;
+        // IP version 4 is default
+        int IPV4_INDEX = 0;
+        int IPV6_INDEX = 1;
+        int IPV4_AND_IPV6_INDEX = 2;
+        String IPV6 = "6";
+        String IPV4 = "4";
+        boolean ipv4Enabled = false;
+        boolean ipv6Enabled = false;
+        if (ver != null) {
+            String verList[] = ver.split(",");
+            for (String version : verList) {
+                version = version.trim();
+                if (version.equals(IPV6)) {
+                    ipv6Enabled = true;
+                }
+                if (version.equals(IPV4)) {
+                    ipv4Enabled = true;
+                }
+            }
+            if (ipv4Enabled && ipv6Enabled) {
+                return IPV4_AND_IPV6_INDEX;
+            }
+            if (ipv6Enabled) {
+                return IPV6_INDEX;
+            }
         }
-        return 0;
+        return IPV4_INDEX;
     }
 
     private void fillUi() {
@@ -457,14 +479,12 @@ public class ApnEditor extends PreferenceActivity
             values.put(Telephony.Carriers.AUTH_TYPE, Integer.parseInt(authVal));
         }
 
-        String version = mIp.getValue();
-        if (version != null) {
-            int index = Integer.parseInt(version);
-            if (index >= ipVersionString.length || index < 0) {
-                index = 0;
-            }
-            values.put(Telephony.Carriers.IPVERSION, ipVersionString[index]);
-        }
+        values.put(Telephony.Carriers.PROTOCOL, checkNotSet(mProtocol.getValue()));
+
+        // Hardcode IPv4 roaming for now until the carriers sort out all the
+        // billing arrangements.
+        values.put(Telephony.Carriers.ROAMING_PROTOCOL,
+                RILConstants.SETUP_DATA_PROTOCOL_IP);
 
         values.put(Telephony.Carriers.TYPE, checkNotSet(mApnType.getText()));
 
